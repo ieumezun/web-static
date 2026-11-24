@@ -3,4 +3,4 @@ deployment:
   tasks:
     - export DEPLOYPATH=$HOME/public_html/
     - /bin/tar --exclude='./.git' --exclude='./.cpanel.yml' --exclude='./.htaccess*' --exclude='./php.ini' --exclude='./.well-known' --exclude='./cgi-bin' -cf - . | /bin/tar -xf - -C $DEPLOYPATH
-    - /bin/cat $HOME/.htaccess.default ./.htaccess > $DEPLOYPATH/.htaccess
+    - /bin/cat $HOME/public_html/.htaccess.default ./.htaccess > $DEPLOYPATH/.htaccess
