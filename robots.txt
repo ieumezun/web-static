@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /bize-ulasin
+Disallow: /en/bize-ulasin
+
+Sitemap: https://www.ieumezun.org.tr/sitemap.xml

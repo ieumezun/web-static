@@ -1,14 +1,86 @@
+# Apache and LiteSpeed only. Other static hosts serve each folder's index.html as the directory URL.
+Options -MultiViews
 DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+<IfModule mod_mime.c>
+  AddType font/woff2 .woff2
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/xml application/xml application/javascript image/svg+xml
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 day"
+  ExpiresByType text/html "access plus 1 hour"
+  ExpiresByType application/xml "access plus 1 hour"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(woff2|jpg|jpeg|png|webp|gif|svg)$">
+    Header set Cache-Control "public, max-age=31536000"
+  </FilesMatch>
+  <FilesMatch "\.css$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+<IfModule mod_rewrite.c>
 RewriteEngine On
 
-RewriteRule ^tuzuk/?$ tuzuk.html [L]
-RewriteRule ^uyelik-formu/?$ uyelik-formu.html [L]
-RewriteRule ^program/?$ program.html [L]
-RewriteRule ^detaylar-ve-kay-t/webinar-1/?$ etkinlik/webinar-1.html [L]
-RewriteRule ^detaylar-ve-kay-t/yaza-merhaba/?$ etkinlik/yaza-merhaba.html [L]
+RewriteCond %{THE_REQUEST} \s/+index\.html[\s?]
+RewriteRule ^index\.html$ / [R=301,L]
 
-RewriteRule ^en/tuzuk/?$ en/tuzuk.html [L]
-RewriteRule ^en/uyelik-formu/?$ en/uyelik-formu.html [L]
-RewriteRule ^en/program/?$ en/program.html [L]
-RewriteRule ^en/detaylar-ve-kay-t/webinar-1/?$ en/etkinlik/webinar-1.html [L]
-RewriteRule ^en/detaylar-ve-kay-t/yaza-merhaba/?$ en/etkinlik/yaza-merhaba.html [L]
+RewriteCond %{THE_REQUEST} \s/+tuzuk\.html[\s?]
+RewriteRule ^tuzuk\.html$ /tuzuk/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+uyelik-formu\.html[\s?]
+RewriteRule ^uyelik-formu\.html$ /uyelik-formu/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+program\.html[\s?]
+RewriteRule ^program\.html$ /program/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+bize-ulasin\.html[\s?]
+RewriteRule ^bize-ulasin\.html$ /bize-ulasin/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+etkinlik/webinar-1\.html[\s?]
+RewriteRule ^etkinlik/webinar-1\.html$ /detaylar-ve-kay-t/webinar-1/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+etkinlik/yaza-merhaba\.html[\s?]
+RewriteRule ^etkinlik/yaza-merhaba\.html$ /detaylar-ve-kay-t/yaza-merhaba/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+detaylar-ve-kay-t/?[\s?]
+RewriteRule ^detaylar-ve-kay-t/?$ /detaylar-ve-kay-t/webinar-1/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+en/index\.html[\s?]
+RewriteRule ^en/index\.html$ /en/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+en/tuzuk\.html[\s?]
+RewriteRule ^en/tuzuk\.html$ /en/tuzuk/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+en/uyelik-formu\.html[\s?]
+RewriteRule ^en/uyelik-formu\.html$ /en/uyelik-formu/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+en/program\.html[\s?]
+RewriteRule ^en/program\.html$ /en/program/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+en/bize-ulasin\.html[\s?]
+RewriteRule ^en/bize-ulasin\.html$ /en/bize-ulasin/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+en/etkinlik/webinar-1\.html[\s?]
+RewriteRule ^en/etkinlik/webinar-1\.html$ /en/detaylar-ve-kay-t/webinar-1/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+en/etkinlik/yaza-merhaba\.html[\s?]
+RewriteRule ^en/etkinlik/yaza-merhaba\.html$ /en/detaylar-ve-kay-t/yaza-merhaba/ [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+en/detaylar-ve-kay-t/?[\s?]
+RewriteRule ^en/detaylar-ve-kay-t/?$ /en/detaylar-ve-kay-t/webinar-1/ [R=301,L]
+</IfModule>
