@@ -1,0 +1,14 @@
+DirectoryIndex index.html
+RewriteEngine On
+
+RewriteRule ^tuzuk/?$ tuzuk.html [L]
+RewriteRule ^uyelik-formu/?$ uyelik-formu.html [L]
+RewriteRule ^program/?$ program.html [L]
+RewriteRule ^detaylar-ve-kay-t/webinar-1/?$ etkinlik/webinar-1.html [L]
+RewriteRule ^detaylar-ve-kay-t/yaza-merhaba/?$ etkinlik/yaza-merhaba.html [L]
+
+RewriteRule ^en/tuzuk/?$ en/tuzuk.html [L]
+RewriteRule ^en/uyelik-formu/?$ en/uyelik-formu.html [L]
+RewriteRule ^en/program/?$ en/program.html [L]
+RewriteRule ^en/detaylar-ve-kay-t/webinar-1/?$ en/etkinlik/webinar-1.html [L]
+RewriteRule ^en/detaylar-ve-kay-t/yaza-merhaba/?$ en/etkinlik/yaza-merhaba.html [L]
